@@ -1,0 +1,12 @@
+.mobileLayout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 480px; // Limit width for mobile view
+  margin: 0 auto;
+  padding: 1rem;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
