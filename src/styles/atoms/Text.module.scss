@@ -1,0 +1,28 @@
+.text {
+  transition: color 0.3s ease; // Optional: smooth color transition
+  display: inline-block; // Required for width and text alignment
+
+  &.small {
+    font-size: 12px; // Small text size
+  }
+
+  &.medium {
+    font-size: 16px; // Medium text size
+  }
+
+  &.large {
+    font-size: 20px; // Large text size
+  }
+
+  &.left {
+    text-align: left; // Left text alignment
+  }
+
+  &.center {
+    text-align: center; // Center text alignment
+  }
+
+  &.right {
+    text-align: right; // Right text alignment
+  }
+}

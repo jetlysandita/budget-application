@@ -1,0 +1,65 @@
+// components/atoms/Button/Button.module.scss
+
+.button {
+  border: none;
+  border-radius: 8px; // Rounded corners
+  cursor: pointer;
+  font-family: 'Open Sans', sans-serif; // Set your font family
+  font-weight: 600; // Bold text
+  padding: 10px 20px; // Default padding
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; // Smooth transition for hover effects
+
+  // Shadow effect
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Default shadow
+  transition: all 0.3s;
+}
+
+.primary {
+  background-color: #5E72E4; // Primary color
+  color: white; // Text color for primary button
+
+  &:hover {
+    background-color:#3f56d8; // Darker on hover
+  }
+}
+
+.secondary {
+  background-color: #FFFFFF; // Secondary color
+  color: #333; // Text color for secondary button
+
+  &:hover {
+    background-color: #ebe7e7; // Lighter on hover
+  }
+}
+
+// Size styles
+.small {
+  font-size: 12px; // Smaller font size
+}
+
+.medium {
+  font-size: 16px; // Medium font size (default)
+}
+
+.large {
+  font-size: 20px; // Larger font size
+}
+
+
+.loading {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.rotate {
+  animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

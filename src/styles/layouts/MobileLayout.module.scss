@@ -1,12 +1,19 @@
-.mobileLayout {
+// src/layouts/MobileLayout.module.scss
+.container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: auto;
+  max-width: 480px;
   width: 100%;
-  max-width: 480px; // Limit width for mobile view
-  margin: 0 auto;
-  padding: 1rem;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
+  position: relative;
+  height: 100vh; // Full viewport height for mobile
 }
 
+.footer {
+  position: absolute;
+  bottom:0;
+  height:60px;
+  width: 100%;
+  background-color: black;
+}
