@@ -16,11 +16,11 @@ export default function App({ Component, pageProps }: AppProps) {
           font-family: ${openSans.style.fontFamily};
         }
       `}</style>
-      <SupabaseProvider>
-        <ToastProvider>
+      <ToastProvider>
+        <SupabaseProvider>
           <Component {...pageProps} />
-        </ToastProvider>
-      </SupabaseProvider>
+        </SupabaseProvider>
+      </ToastProvider>
     </>
   );
 }

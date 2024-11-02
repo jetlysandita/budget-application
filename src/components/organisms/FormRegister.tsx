@@ -35,9 +35,7 @@ const FormRegister: React.FC = () => {
     }
 
     // If validation passes
-    supabase.signUp(name, email, password, (status, message) => {
-      toast.showToast(status as 'success', message);
-    });
+    supabase.signUp(name, email, password);
 
     // Reset form fields
     if (nameRef.current) nameRef.current.value = '';

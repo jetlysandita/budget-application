@@ -1,10 +1,10 @@
-import Box from '@/components/atoms/Box';
 import Flex from '@/components/atoms/Flex';
 import IconHome from '@/components/atoms/IconHome';
 import IconReport from '@/components/atoms/IconReport';
 import Text from '@/components/atoms/Text';
 import MobileLayout from '@/components/layouts/MobileLayout';
 import SectionMyIncome from '@/components/organisms/SectionMyIncome';
+import SectionProfile from '@/components/organisms/SectionProfile';
 import SectionTransaction from '@/components/organisms/SectionTransaction';
 
 export default function Index() {
@@ -36,25 +36,7 @@ export default function Index() {
         </Flex>
       }
     >
-      <Box margin="10.32% 0 0" width="90.87%">
-        <Text color="white" size="large">
-          Hello, Jetly sandita
-        </Text>
-      </Box>
-      <Flex
-        margin="10.32% 0 0"
-        direction="column"
-        width="90.87%"
-        alignItems="center"
-        gap="16px"
-      >
-        <Text color="white" size="small">
-          Balance
-        </Text>
-        <Text color="white" size="large">
-          Rp 15.000.000
-        </Text>
-      </Flex>
+      <SectionProfile />
       <SectionMyIncome />
       <SectionTransaction />
     </MobileLayout>
