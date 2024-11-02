@@ -1,4 +1,5 @@
 import fetchData, { ApiError } from '@/utility/api';
+import { filterJson } from '@/utility/helpers';
 
 interface Income {
   income: number;
@@ -6,7 +7,7 @@ interface Income {
   id: number;
 }
 
-interface MonthlyIncome {
+export interface MonthlyIncome {
   id: number;
   income: number;
   user_id: string;
@@ -44,6 +45,6 @@ export const upsertMontlyIncomeService = async (
       Authorization: `Bearer ${accessToken}`,
       Prefer: 'resolution=merge-duplicates',
     },
-    { ...param },
+    { ...filterJson(param) },
   );
 };

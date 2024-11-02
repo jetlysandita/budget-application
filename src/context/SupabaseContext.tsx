@@ -13,29 +13,33 @@ import {
 import { useToast } from './ToastContext';
 import {
   getMontlyIncomeByYearService,
+  MonthlyIncome,
   upsertMontlyIncomeService,
 } from '@/API/user-income';
+import {
+  getTransactionsService,
+  Transactions,
+  UpsertTransaction,
+  upsertTransactionsService,
+} from '@/API/transactions';
 
 type Status = 'idle' | 'loading' | 'success' | 'error';
-
-interface MonthlyIncome {
-  id: number;
-  income: number;
-  user_id: string;
-  month: number;
-  year: number;
-}
 
 interface SupabaseContextProps {
   signUp: (name: string, email: string, password: string) => Promise<void>; // No return value, as we set the state directly
   signIn: (email: string, password: string) => Promise<void>;
+  signOut: () => void;
   getUser: () => Promise<void>;
   getMonthlyIncome: (year: number) => Promise<void>;
   upsertMonthlyIncome: (incomeData: MonthlyIncome) => Promise<void>; // New function for upserting monthly income
+  getTransactions: (page: number, pageSize: number) => Promise<void>;
+  upsertTransactions: (transaction: UpsertTransaction) => Promise<void>;
   user: User | null;
   status: Status; // Status of the sign-up process
   message: string; // Message for user feedback
   monthlyIncome: MonthlyIncome[];
+  transactions: Transactions[];
+  transactionsHasMore: boolean;
 }
 
 const SupabaseContext = createContext<SupabaseContextProps | undefined>(
@@ -56,6 +60,8 @@ export const SupabaseProvider: React.FC<{ children: React.ReactNode }> = ({
   const [monthlyIncome, setMonthlyIncome] = useState<MonthlyIncome[]>(
     Array(12).fill({ income: 0 }),
   );
+  const [transactions, setTransactions] = useState<Transactions[]>([]);
+  const [transactionsHasMore, setTransactionsHasMore] = useState<boolean>(true);
 
   const toastSuccess = (msg: string) => {
     const status = 'success';
@@ -125,6 +131,11 @@ export const SupabaseProvider: React.FC<{ children: React.ReactNode }> = ({
     });
   };
 
+  const signOut = () => {
+    Cookies.remove('supabaseToken');
+    router.push('/auth');
+  };
+
   const getUser = async (): Promise<void> => {
     initServiceWithToken(async (token) => {
       const response = await getUserService(token);
@@ -155,7 +166,7 @@ export const SupabaseProvider: React.FC<{ children: React.ReactNode }> = ({
     initServiceWithToken(async (token) => {
       const response = await getMontlyIncomeByYearService(year, token);
       if (response.data) {
-        const incomeArray = Array(12).fill({ id: 0, income: 0 }); // [0, 0, ..., 0]
+        const incomeArray = Array(12).fill({ id: null, income: 0 }); // [0, 0, ..., 0]
 
         // Map the fetched data to the corresponding months
         response.data.forEach(
@@ -188,18 +199,68 @@ export const SupabaseProvider: React.FC<{ children: React.ReactNode }> = ({
     });
   };
 
+  const getTransactions = async (page: number, pageSize: number) => {
+    initServiceWithToken(async (token) => {
+      const response = await getTransactionsService(
+        {
+          p_page: page,
+          p_page_size: pageSize,
+        },
+        token,
+      );
+      if (response.data) {
+        if (page == 1) {
+          setTransactions(response.data);
+        } else {
+          setTransactions((prev) => [...prev, ...(response.data || [])]);
+          if (response.data.length == 0) {
+            setTransactionsHasMore(false);
+          }
+        }
+      } else {
+        toastError(response.error?.msg || 'Failed to upset monthly income');
+      }
+    });
+  };
+
+  const upsertTransactions = async (
+    transaction: UpsertTransaction,
+  ): Promise<void> => {
+    if (user?.id) {
+      initServiceWithToken(async (token) => {
+        const response = await upsertTransactionsService(
+          { ...transaction, user_id: user.id },
+          token,
+        );
+        if (response.error == null) {
+          toastSuccess('Transaction updated successfully!');
+          await getUser();
+          await getTransactions(1, 10);
+          // Fetch updated income after upsert
+        } else {
+          toastError(response.error.msg || 'Failed to upset monthly income');
+        }
+      });
+    }
+  };
+
   return (
     <SupabaseContext.Provider
       value={{
         signUp,
-        status,
-        message,
         signIn,
+        signOut,
         getUser,
         getMonthlyIncome,
         upsertMonthlyIncome,
+        getTransactions,
+        upsertTransactions,
+        status,
+        message,
         user,
         monthlyIncome,
+        transactions,
+        transactionsHasMore,
       }}
     >
       {children}

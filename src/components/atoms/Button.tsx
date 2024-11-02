@@ -8,7 +8,7 @@ interface ButtonProps {
   children: React.ReactNode;
   theme?: 'primary' | 'secondary'; // Theme type
   size?: 'small' | 'medium' | 'large'; // Size type
-  onClick?: () => void; // Click event handler
+  onClick?: (e: React.FormEvent) => void; // Click event handler
   isLoading?: boolean; // Loading state
 }
 

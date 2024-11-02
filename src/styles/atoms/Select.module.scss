@@ -1,0 +1,24 @@
+.select-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+ 
+
+  .select-element {
+      padding: 12px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #fff;
+      transition: border-color 0.3s ease;
+      width: 100%;
+      &:focus {
+          border-color: #4B79A1; // Change border color on focus
+          outline: none;
+      }
+
+      &.error {
+          border-color: red; // Error state styling
+      }
+  }
+}

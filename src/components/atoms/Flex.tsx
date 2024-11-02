@@ -45,7 +45,7 @@ const Flex: React.FC<FlexProps> = ({
         justifyContent: justifyContent,
         gap: gap,
         margin,
-        backgroundColor,
+        background: backgroundColor,
         padding,
         width,
         height,

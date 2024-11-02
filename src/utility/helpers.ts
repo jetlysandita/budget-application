@@ -19,3 +19,10 @@ export const censorSensitiveData = (
 ): string => {
   return shouldCensor ? '*****' : data;
 };
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function filterJson(json: any) {
+  return Object.fromEntries(
+    Object.entries(json).filter(([, value]) => value !== null),
+  );
+}

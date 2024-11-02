@@ -97,14 +97,21 @@ const SectionMyIncome: React.FC = () => {
               <Flex
                 width="200px"
                 height="100px"
-                backgroundColor="white"
+                backgroundColor="linear-gradient(#A4C8E1, #6B9ACB)"
                 padding="10px"
                 direction="column"
                 gap="20px"
-                style={{ cursor: 'pointer' }}
+                style={{ cursor: 'pointer', borderRadius: 5 }}
               >
-                <Text size="small">{month}</Text>
-                <Text size="large" textAlign="center" width="100%">
+                <Text size="small" color="#101820">
+                  {month}
+                </Text>
+                <Text
+                  size="large"
+                  textAlign="center"
+                  width="100%"
+                  color="#101820"
+                >
                   {formatRupiah(supabase.monthlyIncome[index].income || 0)}
                 </Text>
               </Flex>

@@ -10,7 +10,7 @@ import SectionTransaction from '@/components/organisms/SectionTransaction';
 export default function Index() {
   return (
     <MobileLayout
-      backgroundImage="linear-gradient(#281483, #8F6ED5,#D782D9)"
+      backgroundImage="linear-gradient(#1A174D, #172B4D)"
       footer={
         <Flex width="100%" justifyContent="space-evenly" height="100%">
           <Flex
