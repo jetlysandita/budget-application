@@ -6,6 +6,7 @@ import { useSupabase } from '@/context/SupabaseContext';
 import { formatRupiah } from '@/utility/helpers';
 import Modal from '../atoms/Modal';
 import Input from '../atoms/Input';
+import Button from '../atoms/Button';
 
 interface SelectedIncome {
   id: number;
@@ -132,6 +133,14 @@ const SectionMyIncome: React.FC = () => {
           value={year.toString()}
           onChange={(e) => setYear(e.target.valueAsNumber)}
         />
+        <Button
+          onClick={() => {
+            setIsShowConfig(false);
+            setSelectedYear(year);
+          }}
+        >
+          Submit
+        </Button>
       </Modal>
       {selectedIncome !== null && (
         <Modal
@@ -164,6 +173,21 @@ const SectionMyIncome: React.FC = () => {
               })
             }
           />
+          <Button
+            onClick={() => {
+              if (supabase.user?.id) {
+                supabase.upsertMonthlyIncome({
+                  id: selectedIncome.id,
+                  month: selectedIncome.month,
+                  income: selectedIncome.income,
+                  user_id: supabase.user.id,
+                  year: selectedYear,
+                });
+              }
+            }}
+          >
+            Submit
+          </Button>
         </Modal>
       )}
     </Flex>
