@@ -133,14 +133,16 @@ const SectionMyIncome: React.FC = () => {
           value={year.toString()}
           onChange={(e) => setYear(e.target.valueAsNumber)}
         />
-        <Button
-          onClick={() => {
-            setIsShowConfig(false);
-            setSelectedYear(year);
-          }}
-        >
-          Submit
-        </Button>
+        <Flex direction="column" gap="5">
+          <Button
+            onClick={() => {
+              setIsShowConfig(false);
+              setSelectedYear(year);
+            }}
+          >
+            Submit
+          </Button>
+        </Flex>
       </Modal>
       {selectedIncome !== null && (
         <Modal
@@ -159,35 +161,37 @@ const SectionMyIncome: React.FC = () => {
             setSelectedIncome(null);
           }}
         >
-          <Input
-            type="number"
-            value={selectedIncome?.income.toString()}
-            onChange={(e) =>
-              setSelectedIncome(() => {
-                return {
-                  id: selectedIncome.id,
-                  income: e.target.valueAsNumber,
-                  month: selectedIncome.month,
-                  monthName: selectedIncome.monthName,
-                };
-              })
-            }
-          />
-          <Button
-            onClick={() => {
-              if (supabase.user?.id) {
-                supabase.upsertMonthlyIncome({
-                  id: selectedIncome.id,
-                  month: selectedIncome.month,
-                  income: selectedIncome.income,
-                  user_id: supabase.user.id,
-                  year: selectedYear,
-                });
+          <Flex direction="column" gap="5">
+            <Input
+              type="number"
+              value={selectedIncome?.income.toString()}
+              onChange={(e) =>
+                setSelectedIncome(() => {
+                  return {
+                    id: selectedIncome.id,
+                    income: e.target.valueAsNumber,
+                    month: selectedIncome.month,
+                    monthName: selectedIncome.monthName,
+                  };
+                })
               }
-            }}
-          >
-            Submit
-          </Button>
+            />
+            <Button
+              onClick={() => {
+                if (supabase.user?.id) {
+                  supabase.upsertMonthlyIncome({
+                    id: selectedIncome.id,
+                    month: selectedIncome.month,
+                    income: selectedIncome.income,
+                    user_id: supabase.user.id,
+                    year: selectedYear,
+                  });
+                }
+              }}
+            >
+              Submit
+            </Button>
+          </Flex>
         </Modal>
       )}
     </Flex>
